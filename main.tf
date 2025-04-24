@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
 resource "aws_iam_role" "lambda_exec" {
@@ -52,7 +52,7 @@ resource "aws_apigatewayv2_route" "default_route" {
 
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.dindin_api.id
-  name        = "$default"
+  name        = var.api_stage
   auto_deploy = true
 }
 

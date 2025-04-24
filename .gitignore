@@ -27,4 +27,14 @@ terraform.rc
 *.zip
 
 # macOS system files
-.DS_Store 
+.DS_Store
+
+# AWS credentials and config
+.aws/
+**/aws.credentials
+**/aws.config
+
+# App configuration
+config.json
+.env
+.env.* 
