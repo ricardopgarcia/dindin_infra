@@ -31,6 +31,15 @@ resource "aws_lambda_function" "dindin_api" {
   source_code_hash = filebase64sha256("${path.module}/lambda/hello_world.zip")
 }
 
+resource "aws_lambda_function" "accounts_api" {
+  function_name = "accounts_api"
+  handler       = "accounts.handler"
+  runtime       = "python3.11"
+  role          = aws_iam_role.lambda_exec.arn
+  filename      = "${path.module}/lambda/accounts.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda/accounts.zip")
+}
+
 resource "aws_apigatewayv2_api" "dindin_api" {
   name          = "DindinAPI"
   protocol_type = "HTTP"
@@ -44,10 +53,24 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
   payload_format_version = "2.0"
 }
 
+resource "aws_apigatewayv2_integration" "accounts_integration" {
+  api_id           = aws_apigatewayv2_api.dindin_api.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.accounts_api.invoke_arn
+  integration_method = "POST"
+  payload_format_version = "2.0"
+}
+
 resource "aws_apigatewayv2_route" "default_route" {
   api_id    = aws_apigatewayv2_api.dindin_api.id
   route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "accounts_route" {
+  api_id    = aws_apigatewayv2_api.dindin_api.id
+  route_key = "GET /accounts"
+  target    = "integrations/${aws_apigatewayv2_integration.accounts_integration.id}"
 }
 
 resource "aws_apigatewayv2_stage" "default" {
@@ -60,6 +83,14 @@ resource "aws_lambda_permission" "allow_api" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.dindin_api.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "allow_accounts_api" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.accounts_api.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
 }
