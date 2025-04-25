@@ -1,41 +1,66 @@
-# DinDin Infrastructure
+# DinDin Infra
 
-This repository contains the infrastructure as code (IaC) for the DinDin application using Terraform and AWS.
+Este repositório contém as funções Lambda para o aplicativo DinDin.
 
-## Infrastructure Components
+## Estrutura do Projeto
 
-- AWS Lambda Function
-- API Gateway (HTTP API)
-- IAM Roles and Policies
+```
+.
+├── lambda/
+│   ├── accounts.py
+│   ├── transactions.py
+│   └── requirements.txt
+└── README.md
+```
 
-## Prerequisites
+## Funções Lambda
 
-- AWS Account
-- Terraform installed
-- AWS CLI configured
+### Accounts Lambda
+- Endpoint: `/accounts`
+- Método: GET
+- Descrição: Retorna a lista de contas do usuário
 
-## Getting Started
+### Transactions Lambda
+- Endpoint: `/transactions`
+- Método: GET
+- Parâmetros:
+  - `account`: Nome da conta para filtrar as transações
+- Descrição: Retorna as transações de uma conta específica
 
-1. Clone this repository
-2. Initialize Terraform:
-   ```bash
-   terraform init
-   ```
-3. Review the planned changes:
-   ```bash
-   terraform plan
-   ```
-4. Apply the infrastructure:
-   ```bash
-   terraform apply
-   ```
+## Deploy na AWS
 
-## Architecture
+1. Instale o AWS CLI e configure suas credenciais:
+```bash
+aws configure
+```
 
-The infrastructure consists of a Lambda function exposed through an HTTP API Gateway. The Lambda function has the necessary IAM roles and permissions to execute and be invoked by the API Gateway.
+2. Crie um arquivo ZIP com as funções Lambda:
+```bash
+cd lambda
+zip -r ../function.zip .
+```
 
-## Security
+3. Crie a função Lambda na AWS:
+```bash
+aws lambda create-function \
+  --function-name dindin-transactions \
+  --runtime python3.9 \
+  --handler transactions.handler \
+  --zip-file fileb://function.zip \
+  --role arn:aws:iam::YOUR_ACCOUNT_ID:role/lambda-role
+```
 
-- IAM roles follow the principle of least privilege
-- API Gateway is configured with HTTP API for better performance
-- Lambda permissions are strictly scoped to API Gateway invocations 
+4. Configure o API Gateway:
+   - Crie uma nova API REST
+   - Crie um recurso `/transactions`
+   - Configure o método GET
+   - Integre com a função Lambda
+   - Implante a API
+
+## Desenvolvimento Local
+
+Para testar localmente, você pode usar o AWS SAM CLI:
+
+```bash
+sam local invoke TransactionsFunction --event events/event.json
+``` 
