@@ -49,6 +49,15 @@ resource "aws_lambda_function" "transactions_api" {
   source_code_hash = filebase64sha256("${path.module}/lambda/transactions.zip")
 }
 
+resource "aws_lambda_function" "ofx_parser_api" {
+  function_name = "ofx_parser_api"
+  handler       = "ofx_parser.handler"
+  runtime       = "python3.11"
+  role          = aws_iam_role.lambda_exec.arn
+  filename      = "${path.module}/lambda/ofx_parser.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda/ofx_parser.zip")
+}
+
 resource "aws_apigatewayv2_api" "dindin_api" {
   name          = "DindinAPI"
   protocol_type = "HTTP"
@@ -78,6 +87,14 @@ resource "aws_apigatewayv2_integration" "transactions_integration" {
   payload_format_version = "2.0"
 }
 
+resource "aws_apigatewayv2_integration" "ofx_parser_integration" {
+  api_id           = aws_apigatewayv2_api.dindin_api.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.ofx_parser_api.invoke_arn
+  integration_method = "POST"
+  payload_format_version = "2.0"
+}
+
 resource "aws_apigatewayv2_route" "default_route" {
   api_id    = aws_apigatewayv2_api.dindin_api.id
   route_key = "GET /"
@@ -94,6 +111,12 @@ resource "aws_apigatewayv2_route" "transactions_route" {
   api_id    = aws_apigatewayv2_api.dindin_api.id
   route_key = "GET /transactions"
   target    = "integrations/${aws_apigatewayv2_integration.transactions_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "ofx_parser_route" {
+  api_id    = aws_apigatewayv2_api.dindin_api.id
+  route_key = "POST /ofx-parser"
+  target    = "integrations/${aws_apigatewayv2_integration.ofx_parser_integration.id}"
 }
 
 resource "aws_apigatewayv2_stage" "default" {
@@ -122,6 +145,14 @@ resource "aws_lambda_permission" "allow_transactions_api" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.transactions_api.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "allow_ofx_parser_api" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.ofx_parser_api.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
 }
