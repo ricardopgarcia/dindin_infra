@@ -1,6 +1,6 @@
 # DinDin Infra
 
-Este repositório contém as funções Lambda para o aplicativo DinDin.
+Este repositório contém a infraestrutura como código (Terraform) e as funções Lambda para o aplicativo DinDin, incluindo integração com AWS API Gateway e S3 para processamento de extratos bancários em formato OFX.
 
 ## Estrutura do Projeto
 
@@ -9,58 +9,111 @@ Este repositório contém as funções Lambda para o aplicativo DinDin.
 ├── lambda/
 │   ├── accounts.py
 │   ├── transactions.py
-│   └── requirements.txt
-└── README.md
+│   ├── ofx_parser.py
+│   ├── requirements.txt
+│   └── events/
+│       ├── event.json
+│       └── sample.ofx
+├── main.tf
+├── variables.tf
+├── README.md
+└── ...
 ```
 
-## Funções Lambda
+## Infraestrutura (Terraform)
+- **Lambda Functions:**
+  - `accounts_api`, `transactions_api`, `ofx_parser_api`, `dindin_api`
+- **API Gateway:**
+  - Rotas: `/accounts`, `/transactions`, `/ofx-parser`, `/`
+- **S3:**
+  - Bucket: `dindin-ofx-files` (armazenamento dos arquivos OFX)
+- **Variáveis:**
+  - `aws_region`, `environment`, `api_stage`
 
-### Accounts Lambda
-- Endpoint: `/accounts`
-- Método: GET
-- Descrição: Retorna a lista de contas do usuário
+## Funções Lambda e Endpoints
 
-### Transactions Lambda
-- Endpoint: `/transactions`
-- Método: GET
-- Parâmetros:
-  - `account`: Nome da conta para filtrar as transações
-- Descrição: Retorna as transações de uma conta específica
+### `/accounts`
+- **Método:** GET
+- **Descrição:** Retorna a lista de contas do usuário.
+- **Exemplo:**
+  ```bash
+  curl https://<api-url>/accounts
+  ```
 
-## Deploy na AWS
+### `/transactions`
+- **Método:** GET
+- **Descrição:** Retorna as transações do extrato OFX mais recente do S3, agrupadas por mês, com estatísticas e filtros.
+- **Parâmetros de filtro:**
+  - `month` (ex: 2025-03)
+  - `category` (ex: Salário, Rendimentos, etc)
+  - `type` (CREDIT ou DEBIT)
+- **Exemplo:**
+  ```bash
+  curl "https://<api-url>/transactions?type=DEBIT&month=2025-03"
+  ```
+- **Exemplo de resposta:**
+  ```json
+  {
+    "summary": {
+      "period": {"startDate": "2025-01-27", "endDate": "2025-04-25"},
+      "balance": {"amount": 17140.7, "date": "2025-04-25"},
+      "total_transactions": 60,
+      "total_credit": 97307.67,
+      "total_debit": 118624.48,
+      "net_balance": -21316.81
+    },
+    "transactions_by_month": { ... },
+    "statistics": { ... }
+  }
+  ```
 
-1. Instale o AWS CLI e configure suas credenciais:
-```bash
-aws configure
-```
+### `/ofx-parser`
+- **Método:** POST
+- **Descrição:** Recebe um arquivo OFX (via body) e retorna os dados estruturados (conta, período, saldo, transações detalhadas).
 
-2. Crie um arquivo ZIP com as funções Lambda:
-```bash
-cd lambda
-zip -r ../function.zip .
-```
+## Integração com S3
+- O arquivo OFX mais recente deve ser enviado para o bucket S3 `dindin-ofx-files` com o nome `latest.ofx`:
+  ```bash
+  aws s3 cp caminho/para/arquivo.ofx s3://dindin-ofx-files/latest.ofx
+  ```
 
-3. Crie a função Lambda na AWS:
-```bash
-aws lambda create-function \
-  --function-name dindin-transactions \
-  --runtime python3.9 \
-  --handler transactions.handler \
-  --zip-file fileb://function.zip \
-  --role arn:aws:iam::YOUR_ACCOUNT_ID:role/lambda-role
-```
+## Deploy
 
-4. Configure o API Gateway:
-   - Crie uma nova API REST
-   - Crie um recurso `/transactions`
-   - Configure o método GET
-   - Integre com a função Lambda
-   - Implante a API
+### Usando Terraform
+1. Configure suas credenciais AWS:
+   ```bash
+   aws configure
+   ```
+2. Inicialize e aplique o Terraform:
+   ```bash
+   terraform init
+   terraform apply -auto-approve
+   ```
 
-## Desenvolvimento Local
+### Atualizando código das Lambdas
+1. Instale dependências e compacte:
+   ```bash
+   cd lambda
+   pip install -r requirements.txt -t .
+   zip -r ../transactions.zip .
+   ```
+2. Atualize a função Lambda:
+   ```bash
+   aws lambda update-function-code --function-name transactions_api --zip-file fileb://../transactions.zip
+   ```
 
-Para testar localmente, você pode usar o AWS SAM CLI:
+## Desenvolvimento Local e Testes
+- Teste funções Lambda localmente com AWS SAM:
+  ```bash
+  sam local invoke TransactionsFunction --event events/event.json
+  ```
+- Teste endpoints com `curl` ou Postman.
 
-```bash
-sam local invoke TransactionsFunction --event events/event.json
-``` 
+## Contribuição
+- Faça um fork do projeto
+- Crie uma branch para sua feature/fix
+- Envie um Pull Request
+
+---
+
+**Dúvidas ou sugestões?** Abra uma issue ou entre em contato! 
