@@ -9,12 +9,23 @@ def get_latest_ofx_content():
     No futuro, isso pode ser parametrizado por conta/banco.
     """
     try:
+        print("Tentando buscar arquivo OFX do S3...")
         s3 = boto3.client('s3')
+        
+        # Lista os objetos para verificar se o arquivo existe
+        try:
+            s3.head_object(Bucket='dindin-ofx-files', Key='latest.ofx')
+        except Exception as e:
+            print(f"Arquivo latest.ofx não encontrado: {str(e)}")
+            return None
+            
         response = s3.get_object(
             Bucket='dindin-ofx-files',
             Key='latest.ofx'
         )
-        return response['Body'].read().decode('utf-8')
+        content = response['Body'].read().decode('utf-8')
+        print(f"Arquivo OFX obtido com sucesso. Tamanho: {len(content)} bytes")
+        return content
     except Exception as e:
         print(f"Erro ao buscar arquivo OFX: {str(e)}")
         return None
@@ -23,37 +34,41 @@ def format_transaction_response(transactions, period, balance, statistics):
     """
     Formata a resposta da API com transações e informações adicionais.
     """
-    # Agrupa transações por mês
-    transactions_by_month = {}
-    for transaction in transactions:
-        month = transaction['date_posted'][:7]  # YYYY-MM
-        if month not in transactions_by_month:
-            transactions_by_month[month] = []
-        transactions_by_month[month].append(transaction)
+    try:
+        # Agrupa transações por mês
+        transactions_by_month = {}
+        for transaction in transactions:
+            month = transaction['date_posted'][:7]  # YYYY-MM
+            if month not in transactions_by_month:
+                transactions_by_month[month] = []
+            transactions_by_month[month].append(transaction)
 
-    return {
-        'summary': {
-            'period': period,
-            'balance': balance,
-            'total_transactions': len(transactions),
-            'total_credit': statistics['total_creditos'],
-            'total_debit': statistics['total_debitos'],
-            'net_balance': statistics['total_creditos'] - statistics['total_debitos']
-        },
-        'transactions_by_month': transactions_by_month,
-        'statistics': {
-            'by_category': statistics['por_categoria'],
-            'by_month': statistics['por_mes'],
-            'largest_transactions': {
-                'credit': statistics['maior_credito'],
-                'debit': statistics['maior_debito']
+        return {
+            'summary': {
+                'period': period,
+                'balance': balance,
+                'total_transactions': len(transactions),
+                'total_credit': statistics['total_creditos'],
+                'total_debit': statistics['total_debitos'],
+                'net_balance': statistics['total_creditos'] - statistics['total_debitos']
             },
-            'averages': {
-                'credit': statistics['media_creditos'],
-                'debit': statistics['media_debitos']
+            'transactions_by_month': transactions_by_month,
+            'statistics': {
+                'by_category': statistics['por_categoria'],
+                'by_month': statistics['por_mes'],
+                'largest_transactions': {
+                    'credit': statistics['maior_credito'],
+                    'debit': statistics['maior_debito']
+                },
+                'averages': {
+                    'credit': statistics['media_creditos'],
+                    'debit': statistics['media_debitos']
+                }
             }
         }
-    }
+    except Exception as e:
+        print(f"Erro ao formatar resposta: {str(e)}")
+        raise
 
 def handler(event, context):
     """
@@ -64,11 +79,15 @@ def handler(event, context):
     - type: Filtra por tipo (CREDIT/DEBIT)
     """
     try:
+        print("Iniciando processamento da requisição...")
+        
         # Obtém parâmetros da query string
         params = event.get('queryStringParameters', {}) or {}
         month_filter = params.get('month')
         category_filter = params.get('category')
         type_filter = params.get('type')
+        
+        print(f"Filtros recebidos: month={month_filter}, category={category_filter}, type={type_filter}")
 
         # Busca dados OFX
         ofx_content = get_latest_ofx_content()
@@ -81,26 +100,35 @@ def handler(event, context):
                 },
                 'body': json.dumps({
                     'error': 'Erro ao buscar dados OFX',
-                    'message': 'Não foi possível obter os dados das transações'
+                    'message': 'Arquivo OFX não encontrado ou inacessível no S3',
+                    'details': 'Verifique se o arquivo latest.ofx existe no bucket dindin-ofx-files'
                 })
             }
 
         # Processa o arquivo OFX
+        print("Processando arquivo OFX...")
         ofx_response = ofx_parser({'body': ofx_content}, None)
         if ofx_response['statusCode'] != 200:
+            print(f"Erro ao processar OFX: {ofx_response['body']}")
             return ofx_response
 
         # Obtém os dados processados
         ofx_data = json.loads(ofx_response['body'])
         transactions = ofx_data['transactions']
+        print(f"Total de transações encontradas: {len(transactions)}")
         
         # Aplica filtros
         if month_filter:
             transactions = [t for t in transactions if t['date_posted'].startswith(month_filter)]
+            print(f"Após filtro de mês: {len(transactions)} transações")
+            
         if category_filter:
             transactions = [t for t in transactions if t['suggested_category'] == category_filter]
+            print(f"Após filtro de categoria: {len(transactions)} transações")
+            
         if type_filter:
             transactions = [t for t in transactions if t['type'] == type_filter]
+            print(f"Após filtro de tipo: {len(transactions)} transações")
 
         # Formata a resposta
         response_data = format_transaction_response(
@@ -110,6 +138,7 @@ def handler(event, context):
             statistics=ofx_data['statistics']
         )
 
+        print("Processamento concluído com sucesso")
         return {
             'statusCode': 200,
             'headers': {
@@ -129,6 +158,7 @@ def handler(event, context):
             },
             'body': json.dumps({
                 'error': 'Erro interno',
-                'message': str(e)
+                'message': 'Erro ao processar as transações',
+                'details': str(e)
             })
         } 

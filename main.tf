@@ -17,6 +17,29 @@ resource "aws_iam_role" "lambda_exec" {
   })
 }
 
+resource "aws_iam_role_policy" "lambda_s3_policy" {
+  name = "lambda_s3_policy"
+  role = aws_iam_role.lambda_exec.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::dindin-ofx-files",
+          "arn:aws:s3:::dindin-ofx-files/*"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
@@ -47,6 +70,8 @@ resource "aws_lambda_function" "transactions_api" {
   role          = aws_iam_role.lambda_exec.arn
   filename      = "${path.module}/lambda/transactions.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/transactions.zip")
+  timeout       = 30
+  memory_size   = 256
 }
 
 resource "aws_lambda_function" "ofx_parser_api" {
@@ -56,6 +81,22 @@ resource "aws_lambda_function" "ofx_parser_api" {
   role          = aws_iam_role.lambda_exec.arn
   filename      = "${path.module}/lambda/ofx_parser.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/ofx_parser.zip")
+}
+
+resource "aws_lambda_function" "investment_detail_api" {
+  function_name = "investment_detail_api"
+  handler       = "investment_detail.handler"
+  runtime       = "python3.11"
+  role          = aws_iam_role.lambda_exec.arn
+  filename      = "${path.module}/lambda/investment_detail.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda/investment_detail.zip")
+  timeout       = 10
+  memory_size   = 128
+  environment {
+    variables = {
+      INVESTMENTS_BUCKET = "dindin-ofx-files"
+    }
+  }
 }
 
 resource "aws_apigatewayv2_api" "dindin_api" {
@@ -95,6 +136,14 @@ resource "aws_apigatewayv2_integration" "ofx_parser_integration" {
   payload_format_version = "2.0"
 }
 
+resource "aws_apigatewayv2_integration" "investment_detail_integration" {
+  api_id           = aws_apigatewayv2_api.dindin_api.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.investment_detail_api.invoke_arn
+  integration_method = "POST"
+  payload_format_version = "2.0"
+}
+
 resource "aws_apigatewayv2_route" "default_route" {
   api_id    = aws_apigatewayv2_api.dindin_api.id
   route_key = "GET /"
@@ -117,6 +166,12 @@ resource "aws_apigatewayv2_route" "ofx_parser_route" {
   api_id    = aws_apigatewayv2_api.dindin_api.id
   route_key = "POST /ofx-parser"
   target    = "integrations/${aws_apigatewayv2_integration.ofx_parser_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "investment_detail_route" {
+  api_id    = aws_apigatewayv2_api.dindin_api.id
+  route_key = "GET /investments/{investmentId}"
+  target    = "integrations/${aws_apigatewayv2_integration.investment_detail_integration.id}"
 }
 
 resource "aws_apigatewayv2_stage" "default" {
@@ -155,4 +210,25 @@ resource "aws_lambda_permission" "allow_ofx_parser_api" {
   function_name = aws_lambda_function.ofx_parser_api.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "allow_investment_detail_api" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.investment_detail_api.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dindin_api.execution_arn}/*/*"
+}
+
+resource "aws_s3_bucket" "ofx_files" {
+  bucket = "dindin-ofx-files"
+}
+
+resource "aws_s3_bucket_public_access_block" "ofx_files" {
+  bucket = aws_s3_bucket.ofx_files.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }

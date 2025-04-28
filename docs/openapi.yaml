@@ -139,4 +139,115 @@ paths:
                     fitid: '20250306001'
                     memo: JUROS POUPANCA SALARIO
                     check_number: '20250306001'
-                    suggested_category: Rendimentos 
+                    suggested_category: Rendimentos
+  /investments/{investmentId}:
+    get:
+      summary: Buscar detalhes do investimento
+      parameters:
+        - in: path
+          name: investmentId
+          required: true
+          schema:
+            type: string
+          description: ID da conta de investimento
+      responses:
+        '200':
+          description: Detalhes do investimento
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  category:
+                    type: string
+                  currentBalance:
+                    type: number
+                  initialInvestment:
+                    type: number
+                  totalProfitability:
+                    type: number
+                  annualProfitability:
+                    type: number
+                  liquidity:
+                    type: string
+                  maturityDate:
+                    type: string
+                    format: date
+                  chartData:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        value:
+                          type: number
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        description:
+                          type: string
+                        date:
+                          type: string
+                          format: date
+                        value:
+                          type: number
+              example:
+                id: ITUB4-acoes
+                name: ITUB4
+                type: investimento
+                category: Ações
+                currentBalance: 1300.00
+                initialInvestment: 1000.00
+                totalProfitability: 30.0
+                annualProfitability: 12.5
+                liquidity: D+2
+                maturityDate: 2026-12-15
+                chartData:
+                  - date: 2024-01-01
+                    value: 1000.00
+                  - date: 2024-02-01
+                    value: 1025.00
+                  - date: 2024-03-01
+                    value: 1100.00
+                  - date: 2024-04-01
+                    value: 1300.00
+                transactions:
+                  - id: "1"
+                    description: Aplicação Inicial
+                    date: 2024-01-01
+                    value: 1000.00
+                  - id: "2"
+                    description: Rendimento Mensal
+                    date: 2024-02-01
+                    value: 25.00
+                  - id: "3"
+                    description: Rendimento Mensal
+                    date: 2024-03-01
+                    value: 75.00
+                  - id: "4"
+                    description: Rendimento Mensal
+                    date: 2024-04-01
+                    value: 100.00
+        '404':
+          description: Investimento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Investimento não encontrado 
