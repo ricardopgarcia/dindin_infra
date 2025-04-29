@@ -1,0 +1,207 @@
+{
+  "accounts": [
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Liquidez - Pri",
+      "balance": 170202.50,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.columns",
+      "name": "Previdência",
+      "balance": 99373.61,
+      "category": "Previdência",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Ri Liquidez",
+      "balance": 95957.11,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Caruana - Ri - 120%",
+      "balance": 78349.59,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.columns",
+      "name": "FGTS - Ri",
+      "balance": 73813.07,
+      "category": "FGTS",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB AGIBANK DAYCOVAL",
+      "balance": 71933.91,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL - 110 - Ri",
+      "balance": 69643.59,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - Pré",
+      "balance": 68616.65,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL - 110 - Pri",
+      "balance": 59637.18,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Caruana - Pri - 120%",
+      "balance": 55964.00,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré",
+      "balance": 52683.84,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré 18 meses",
+      "balance": 52559.54,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - 125% do CDI",
+      "balance": 48544.94,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.2",
+      "name": "TAEE11",
+      "balance": 43617.20,
+      "category": "FIIs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - Pré",
+      "balance": 38995.69,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval - Ri - Liquidez",
+      "balance": 35366.80,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Fibra Pré",
+      "balance": 30981.27,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL 110 - Pri",
+      "balance": 29620.14,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré",
+      "balance": 25034.16,
+      "category": "CDBs",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.2",
+      "name": "TRPL4",
+      "balance": 23442.96,
+      "category": "FIIs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.bar",
+      "name": "CMIG4",
+      "balance": 13581.50,
+      "category": "Ações",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.2",
+      "name": "MXRF11",
+      "balance": 9905.91,
+      "category": "FIIs",
+      "type": "investimento"
+    },
+    {
+      "icon": "chart.bar",
+      "name": "WBBR3",
+      "balance": 7921.00,
+      "category": "Ações",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.2",
+      "name": "HFOF11",
+      "balance": 7588.62,
+      "category": "FIIs",
+      "type": "investimento"
+    },
+    {
+      "icon": "banknote",
+      "name": "Cofrinho - Itaú",
+      "balance": 6659.11,
+      "category": "Contas",
+      "type": "conta"
+    },
+    {
+      "icon": "building.2",
+      "name": "BRCR11",
+      "balance": 4697.55,
+      "category": "FIIs",
+      "type": "investimento"
+    },
+    {
+      "icon": "bitcoinsign.circle",
+      "name": "Bitcoin",
+      "balance": 1103.01,
+      "category": "Criptomoedas",
+      "type": "investimento"
+    },
+    {
+      "icon": "bitcoinsign.circle",
+      "name": "TRUMP",
+      "balance": 571.29,
+      "category": "Criptomoedas",
+      "type": "investimento"
+    },
+    {
+      "icon": "building.2",
+      "name": "CNES11",
+      "balance": 124.02,
+      "category": "FIIs",
+      "type": "investimento"
+    }
+  ]
+} 
