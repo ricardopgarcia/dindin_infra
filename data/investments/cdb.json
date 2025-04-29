@@ -1,0 +1,54 @@
+{
+  "account_name": "CDB Daycoval Liquidez - Pri",
+  "account_id": "5327e1d0-dda1-44f2-8ecc-a8b83b032dda",
+  "purchase_date": "2023-09-14",
+  "maturity_date": "2025-09-03",
+  "rate": "115.83% do CDI",
+  "initial_investment": 153182.25,
+  "current_balance": 170202.50,
+  "risk_level": "Baixo",
+  "liquidity": "D+1",
+  "institution": "Daycoval",
+  "profitability": {
+    "total": 11.11,
+    "annual": 13.25,
+    "period": {
+      "start_date": "2023-09-14",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2023-09-14",
+      "value": 153182.25
+    },
+    {
+      "date": "2023-12-31",
+      "value": 160500.00
+    },
+    {
+      "date": "2024-04-28",
+      "value": 170202.50
+    }
+  ],
+  "transactions": [
+    {
+      "id": "cdb-001",
+      "description": "Aplicação Inicial",
+      "date": "2023-09-14",
+      "value": 153182.25
+    },
+    {
+      "id": "cdb-002",
+      "description": "Rendimento 4º Trimestre 2023",
+      "date": "2023-12-31",
+      "value": 7317.75
+    },
+    {
+      "id": "cdb-003",
+      "description": "Rendimento 1º Trimestre 2024",
+      "date": "2024-03-31",
+      "value": 9702.50
+    }
+  ]
+}

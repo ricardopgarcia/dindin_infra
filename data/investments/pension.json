@@ -1,0 +1,56 @@
+{
+  "account_name": "Previdência",
+  "account_id": "a4c2835e-002c-4624-981c-6053d91c9146",
+  "plan_type": "VGBL",
+  "start_date": "2017-12-11",
+  "total_balance": 99373.61,
+  "monthly_contribution": 1987.47,
+  "tax_regime": "Progressivo",
+  "portfolio_composition": {
+    "Renda Fixa": "47.8%",
+    "Renda Variável": "33.5%"
+  },
+  "institution": "XP Vida e Previdência",
+  "profitability": {
+    "total": 65.25,
+    "annual": 9.85,
+    "period": {
+      "start_date": "2017-12-11",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2017-12-11",
+      "value": 60135.00
+    },
+    {
+      "date": "2021-12-11",
+      "value": 80000.00
+    },
+    {
+      "date": "2024-04-28",
+      "value": 99373.61
+    }
+  ],
+  "transactions": [
+    {
+      "id": "pension-001",
+      "description": "Aporte Inicial",
+      "date": "2017-12-11",
+      "value": 60135.00
+    },
+    {
+      "id": "pension-002",
+      "description": "Aporte Mensal",
+      "date": "2024-03-10",
+      "value": 1987.47
+    },
+    {
+      "id": "pension-003",
+      "description": "Aporte Mensal",
+      "date": "2024-04-10",
+      "value": 1987.47
+    }
+  ]
+}

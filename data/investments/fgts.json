@@ -1,0 +1,52 @@
+{
+  "account_name": "FGTS - Ri",
+  "account_id": "6a023e96-aeba-40b8-9bc0-a58f965841a0",
+  "total_balance": 73813.07,
+  "birthday_withdrawal": 3690.65,
+  "annual_yield": "TR + 3% a.a.",
+  "next_withdrawal_date": "2025-12-02",
+  "employer": "Atual Empregador",
+  "available_for_withdrawal": 17831.17,
+  "profitability": {
+    "total": 3.00,
+    "annual": 3.00,
+    "period": {
+      "start_date": "2023-12-31",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2023-12-31",
+      "value": 71663.17
+    },
+    {
+      "date": "2024-02-28",
+      "value": 72738.12
+    },
+    {
+      "date": "2024-04-28",
+      "value": 73813.07
+    }
+  ],
+  "transactions": [
+    {
+      "id": "fgts-001",
+      "description": "Depósito FGTS",
+      "date": "2024-02-07",
+      "value": 1074.95
+    },
+    {
+      "id": "fgts-002",
+      "description": "Depósito FGTS",
+      "date": "2024-03-07",
+      "value": 1074.95
+    },
+    {
+      "id": "fgts-003",
+      "description": "Rendimento TR",
+      "date": "2024-03-31",
+      "value": 179.53
+    }
+  ]
+}

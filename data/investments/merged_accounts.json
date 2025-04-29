@@ -1,0 +1,348 @@
+{
+  "accounts": [
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Liquidez - Pri",
+      "balance": 170202.5,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "5327e1d0-dda1-44f2-8ecc-a8b83b032dda"
+    },
+    {
+      "icon": "building.columns",
+      "name": "Previdência",
+      "balance": 99373.61,
+      "category": "Previdência",
+      "type": "investimento",
+      "id": "a4c2835e-002c-4624-981c-6053d91c9146"
+    },
+    {
+      "icon": "banknote",
+      "name": "C/C Itaú - Ricardo",
+      "balance": 94387.93,
+      "category": "Contas",
+      "type": "conta",
+      "id": "cc-itau-ricardo"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Ri Liquidez",
+      "balance": 95957.11,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "48b94910-a506-4027-9389-3e5c2f6f3f60"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Caruana - Ri - 120%",
+      "balance": 78349.59,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "5b3e1c35-7735-4d29-8a4d-6a8518896df0"
+    },
+    {
+      "icon": "building.columns",
+      "name": "FGTS - Ri",
+      "balance": 73813.07,
+      "category": "FGTS",
+      "type": "investimento",
+      "id": "6a023e96-aeba-40b8-9bc0-a58f965841a0"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB AGIBANK DAYCOVAL",
+      "balance": 71933.91,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "6aafb603-4c00-49d1-96c0-61b9b7d3953d"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL - 110 - Ri",
+      "balance": 69643.59,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "def6eaa2-f6e4-42d5-8a35-7045ba072fa6"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - Pré",
+      "balance": 68616.65,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "77f861b2-194c-40d6-8444-679ea432f71d"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL - 110 - Pri",
+      "balance": 59637.18,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "254996b6-eff4-4927-ade9-e13fc3131b46"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval Caruana - Pri - 120%",
+      "balance": 55964.0,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "8d16f103-c2e8-487a-9952-f8e629287c54"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré",
+      "balance": 52683.84,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "17d4a72b-e81c-4184-86a4-1f6acadf90e2"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré 18 meses",
+      "balance": 52559.54,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "8298263b-3ce7-4244-8515-cb5f8673008a"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - 125% do CDI",
+      "balance": 48544.94,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "2aa642b6-3023-4201-b297-a45fb6d60cbd"
+    },
+    {
+      "icon": "building.2",
+      "name": "TAEE11 - Taesa",
+      "balance": 43617.2,
+      "category": "Ações",
+      "type": "investimento",
+      "id": "1971da21-83c7-4b3d-bad2-5569bbdb629f"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Ri - Pré",
+      "balance": 38995.69,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "d35635d2-bfa7-4759-90b2-c2ea1f44d414"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Daycoval - Ri - Liquidez",
+      "balance": 35366.8,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "b069d40a-47c9-4cac-8074-0a264cd8672e"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB Fibra Pré",
+      "balance": 30981.27,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "bbef0bbc-9638-4868-a831-585d463f8e11"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB DAYCOVAL 110 - Pri",
+      "balance": 29620.14,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "77073c12-2410-460d-a654-f3dc85bbe66b"
+    },
+    {
+      "icon": "chart.line.uptrend.xyaxis",
+      "name": "CDB C6 - Pri - Pré",
+      "balance": 25034.16,
+      "category": "CDBs",
+      "type": "investimento",
+      "id": "79192af8-7036-4e37-8b4c-7cffa5613ef7"
+    },
+    {
+      "icon": "banknote",
+      "name": "Conta Global C6 - Ricardo",
+      "balance": 20967.46,
+      "category": "Contas",
+      "type": "conta",
+      "id": "global-c6-ricardo"
+    },
+    {
+      "icon": "banknote",
+      "name": "Banco Inter - Priscila",
+      "balance": 20752.21,
+      "category": "Contas",
+      "type": "conta",
+      "id": "inter-priscila"
+    },
+    {
+      "icon": "building.2",
+      "name": "TRPL4 - ISA CTEEP",
+      "balance": 23442.96,
+      "category": "Ações",
+      "type": "investimento",
+      "id": "fb44d4fd-2f43-4f2d-9c58-dc18e1ce0a58"
+    },
+    {
+      "icon": "chart.bar",
+      "name": "CMIG4 - Cemig",
+      "balance": 13581.5,
+      "category": "Ações",
+      "type": "investimento",
+      "id": "df6638c3-9124-49db-a8a5-02e5b0d4b60c"
+    },
+    {
+      "icon": "banknote",
+      "name": "Conta Global Nomad - Priscila",
+      "balance": 10835.52,
+      "category": "Contas",
+      "type": "conta",
+      "id": "global-nomad-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "C/C Itaú - Priscila",
+      "balance": 10135.90,
+      "category": "Contas",
+      "type": "conta",
+      "id": "cc-itau-priscila"
+    },
+    {
+      "icon": "building.2",
+      "name": "MXRF11",
+      "balance": 9905.91,
+      "category": "FIIs",
+      "type": "investimento",
+      "id": "afe885d3-1815-4868-9910-d9cb5fed36f4"
+    },
+    {
+      "icon": "chart.bar",
+      "name": "WBBR3 - Wilson Sons",
+      "balance": 7921.0,
+      "category": "Ações",
+      "type": "investimento",
+      "id": "cf4326db-5db8-4f65-a4c1-b3330e2e3346"
+    },
+    {
+      "icon": "building.2",
+      "name": "HFOF11",
+      "balance": 7588.62,
+      "category": "FIIs",
+      "type": "investimento",
+      "id": "f8078acb-0903-46cf-8db9-224ee88be270"
+    },
+    {
+      "icon": "banknote",
+      "name": "Cofrinho - Itaú",
+      "balance": 6659.11,
+      "category": "Contas",
+      "type": "conta",
+      "id": "6093d715-8509-411b-b0cf-2cd58ea660af"
+    },
+    {
+      "icon": "building.2",
+      "name": "BRCR11",
+      "balance": 4697.55,
+      "category": "FIIs",
+      "type": "investimento",
+      "id": "3baef1e4-302d-43b2-996b-7c8600cd4929"
+    },
+    {
+      "icon": "bitcoinsign.circle",
+      "name": "Bitcoin",
+      "balance": 1103.01,
+      "category": "Criptomoedas",
+      "type": "investimento",
+      "id": "b9e2a9ac-25be-4a54-9574-78a03c168063"
+    },
+    {
+      "icon": "bitcoinsign.circle",
+      "name": "TRUMP",
+      "balance": 571.29,
+      "category": "Criptomoedas",
+      "type": "investimento",
+      "id": "afce78aa-9aba-48e8-a39f-652bbe7f88f7"
+    },
+    {
+      "icon": "banknote",
+      "name": "Banco C6 - Priscila",
+      "balance": 394.72,
+      "category": "Contas",
+      "type": "conta",
+      "id": "c6-priscila"
+    },
+    {
+      "icon": "building.2",
+      "name": "CNES11",
+      "balance": 124.02,
+      "category": "FIIs",
+      "type": "investimento",
+      "id": "5caf8cf9-fcb8-4634-937b-e8437b73dd58"
+    },
+    {
+      "icon": "banknote",
+      "name": "Nomad - Ri",
+      "balance": 0.30,
+      "category": "Contas",
+      "type": "conta",
+      "id": "nomad-ri"
+    },
+    {
+      "icon": "banknote",
+      "name": "Corretora Daycoval - Priscila",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "daycoval-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "Corretora Daycoval - Ricardo",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "daycoval-ricardo"
+    },
+    {
+      "icon": "banknote",
+      "name": "Mercado Bitcoin - Pri",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "mb-priscila"
+    },
+    {
+      "icon": "creditcard",
+      "name": "Visa Click - Priscila",
+      "balance": 0.00,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "visa-click-priscila"
+    },
+    {
+      "icon": "creditcard",
+      "name": "MASTER",
+      "balance": -2947.50,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "master"
+    },
+    {
+      "icon": "creditcard",
+      "name": "VISA",
+      "balance": -15705.42,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "visa"
+    },
+    {
+      "icon": "creditcard",
+      "name": "C6 - Priscila",
+      "balance": -22440.18,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "c6-card-priscila"
+    }
+  ]
+} 

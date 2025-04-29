@@ -1,0 +1,42 @@
+{
+  "account_name": "TAEE11 - Taesa",
+  "account_id": "1971da21-83c7-4b3d-bad2-5569bbdb629f",
+  "ticker": "TAEE11",
+  "sector": "Energia",
+  "quantity": 625,
+  "average_price": 69.79,
+  "current_price": 69.79,
+  "total_balance": 43617.2,
+  "purchase_date": "2024-04-22",
+  "dividend_yield": "13.76%",
+  "profitability": {
+    "total": 0.00,
+    "annual": 0.00,
+    "period": {
+      "start_date": "2024-04-22",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2024-04-22",
+      "value": 43617.2
+    },
+    {
+      "date": "2024-04-25",
+      "value": 43617.2
+    },
+    {
+      "date": "2024-04-28",
+      "value": 43617.2
+    }
+  ],
+  "transactions": [
+    {
+      "id": "taee-001",
+      "description": "Compra Inicial",
+      "date": "2024-04-22",
+      "value": -43617.2
+    }
+  ]
+} 

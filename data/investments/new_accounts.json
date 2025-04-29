@@ -1,0 +1,116 @@
+{
+  "accounts": [
+    {
+      "icon": "banknote",
+      "name": "C/C Itaú - Ricardo",
+      "balance": 94387.93,
+      "category": "Contas",
+      "type": "conta",
+      "id": "cc-itau-ricardo"
+    },
+    {
+      "icon": "banknote",
+      "name": "Conta Global C6 - Ricardo",
+      "balance": 20967.46,
+      "category": "Contas",
+      "type": "conta",
+      "id": "global-c6-ricardo"
+    },
+    {
+      "icon": "banknote",
+      "name": "Banco Inter - Priscila",
+      "balance": 20752.21,
+      "category": "Contas",
+      "type": "conta",
+      "id": "inter-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "Conta Global Nomad - Priscila",
+      "balance": 10835.52,
+      "category": "Contas",
+      "type": "conta",
+      "id": "global-nomad-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "C/C Itaú - Priscila",
+      "balance": 10135.90,
+      "category": "Contas",
+      "type": "conta",
+      "id": "cc-itau-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "Banco C6 - Priscila",
+      "balance": 394.72,
+      "category": "Contas",
+      "type": "conta",
+      "id": "c6-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "Nomad - Ri",
+      "balance": 0.30,
+      "category": "Contas",
+      "type": "conta",
+      "id": "nomad-ri"
+    },
+    {
+      "icon": "banknote",
+      "name": "Corretora Daycoval - Priscila",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "daycoval-priscila"
+    },
+    {
+      "icon": "banknote",
+      "name": "Corretora Daycoval - Ricardo",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "daycoval-ricardo"
+    },
+    {
+      "icon": "banknote",
+      "name": "Mercado Bitcoin - Pri",
+      "balance": 0.00,
+      "category": "Contas",
+      "type": "conta",
+      "id": "mb-priscila"
+    },
+    {
+      "icon": "creditcard",
+      "name": "Visa Click - Priscila",
+      "balance": 0.00,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "visa-click-priscila"
+    },
+    {
+      "icon": "creditcard",
+      "name": "MASTER",
+      "balance": -2947.50,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "master"
+    },
+    {
+      "icon": "creditcard",
+      "name": "VISA",
+      "balance": -15705.42,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "visa"
+    },
+    {
+      "icon": "creditcard",
+      "name": "C6 - Priscila",
+      "balance": -22440.18,
+      "category": "Cartões",
+      "type": "cartao",
+      "id": "c6-card-priscila"
+    }
+  ]
+} 

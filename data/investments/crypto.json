@@ -1,0 +1,54 @@
+{
+  "account_name": "Bitcoin",
+  "account_id": "b9e2a9ac-25be-4a54-9574-78a03c168063",
+  "token": "Bitcoin",
+  "quantity": 0.3266231,
+  "average_price": 3377.01,
+  "current_price": 3377.01,
+  "total_balance": 1103.01,
+  "purchase_date": "2021-06-13",
+  "wallet": "Coinbase",
+  "network": "ETH",
+  "profitability": {
+    "total": 125.75,
+    "annual": 35.25,
+    "period": {
+      "start_date": "2021-06-13",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2021-06-13",
+      "value": 488.75
+    },
+    {
+      "date": "2023-06-13",
+      "value": 750.00
+    },
+    {
+      "date": "2024-04-28",
+      "value": 1103.01
+    }
+  ],
+  "transactions": [
+    {
+      "id": "crypto-001",
+      "description": "Compra Inicial",
+      "date": "2021-06-13",
+      "value": -488.75
+    },
+    {
+      "id": "crypto-002",
+      "description": "Compra Adicional",
+      "date": "2023-06-13",
+      "value": -261.25
+    },
+    {
+      "id": "crypto-003",
+      "description": "Valorização",
+      "date": "2024-04-28",
+      "value": 353.01
+    }
+  ]
+}

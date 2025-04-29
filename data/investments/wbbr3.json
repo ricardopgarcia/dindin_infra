@@ -1,0 +1,34 @@
+{
+  "account_name": "WBBR3 - Wilson Sons",
+  "account_id": "cf4326db-5db8-4f65-a4c1-b3330e2e3346",
+  "ticker": "WBBR3",
+  "sector": "Logística",
+  "quantity": 265,
+  "average_price": 29.89,
+  "current_price": 29.89,
+  "total_balance": 7921.0,
+  "purchase_date": "2024-08-01",
+  "dividend_yield": "7.50%",
+  "profitability": {
+    "total": 0.00,
+    "annual": 0.00,
+    "period": {
+      "start_date": "2024-08-01",
+      "end_date": "2024-08-01"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2024-08-01",
+      "value": 7921.0
+    }
+  ],
+  "transactions": [
+    {
+      "id": "wbbr-001",
+      "description": "Compra Inicial",
+      "date": "2024-08-01",
+      "value": -7921.0
+    }
+  ]
+}

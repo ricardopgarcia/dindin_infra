@@ -1,0 +1,54 @@
+{
+  "account_name": "CMIG4",
+  "account_id": "df6638c3-9124-49db-a8a5-02e5b0d4b60c",
+  "ticker": "CMIG4",
+  "sector": "Tecnologia",
+  "quantity": 478,
+  "average_price": 28.41,
+  "current_price": 28.41,
+  "total_balance": 13581.50,
+  "purchase_date": "2020-07-14",
+  "dividend_yield": "11.10%",
+  "profitability": {
+    "total": 35.50,
+    "annual": 12.75,
+    "period": {
+      "start_date": "2020-07-14",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2020-07-14",
+      "value": 10023.00
+    },
+    {
+      "date": "2022-07-14",
+      "value": 11500.00
+    },
+    {
+      "date": "2024-04-28",
+      "value": 13581.50
+    }
+  ],
+  "transactions": [
+    {
+      "id": "stock-001",
+      "description": "Compra Inicial",
+      "date": "2020-07-14",
+      "value": -10023.00
+    },
+    {
+      "id": "stock-002",
+      "description": "Dividendos 2023",
+      "date": "2023-12-31",
+      "value": 1507.55
+    },
+    {
+      "id": "stock-003",
+      "description": "JCP 2024",
+      "date": "2024-03-31",
+      "value": 550.95
+    }
+  ]
+}

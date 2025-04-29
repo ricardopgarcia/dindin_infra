@@ -1,0 +1,55 @@
+{
+  "account_name": "HFOF11",
+  "account_id": "f8078acb-0903-46cf-8db9-224ee88be270",
+  "ticker": "HFOF11",
+  "segment": "Fundo de Fundos",
+  "quantity": 99,
+  "average_price": 76.65,
+  "current_price": 76.65,
+  "total_balance": 7588.62,
+  "purchase_date": "2020-12-16",
+  "dividend_yield": "8.78%",
+  "vacancy_rate": "0.5%",
+  "profitability": {
+    "total": 42.15,
+    "annual": 11.85,
+    "period": {
+      "start_date": "2020-12-16",
+      "end_date": "2024-04-28"
+    }
+  },
+  "chart_data": [
+    {
+      "date": "2020-12-16",
+      "value": 5335.00
+    },
+    {
+      "date": "2022-12-16",
+      "value": 6500.00
+    },
+    {
+      "date": "2024-04-28",
+      "value": 7588.62
+    }
+  ],
+  "transactions": [
+    {
+      "id": "fii-001",
+      "description": "Compra Inicial",
+      "date": "2020-12-16",
+      "value": -5335.00
+    },
+    {
+      "id": "fii-002",
+      "description": "Rendimentos 2023",
+      "date": "2023-12-31",
+      "value": 666.27
+    },
+    {
+      "id": "fii-003",
+      "description": "Rendimentos 1º Trimestre 2024",
+      "date": "2024-03-31",
+      "value": 187.35
+    }
+  ]
+}
