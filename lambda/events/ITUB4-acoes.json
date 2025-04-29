@@ -1,0 +1,24 @@
+{
+  "id": "ITUB4-acoes",
+  "name": "ITUB4",
+  "type": "investimento",
+  "category": "Ações",
+  "currentBalance": 1300.00,
+  "initialInvestment": 1000.00,
+  "totalProfitability": 30.0,
+  "annualProfitability": 12.5,
+  "liquidity": "D+2",
+  "maturityDate": "2026-12-15",
+  "chartData": [
+    { "date": "2024-01-01", "value": 1000.00 },
+    { "date": "2024-02-01", "value": 1025.00 },
+    { "date": "2024-03-01", "value": 1100.00 },
+    { "date": "2024-04-01", "value": 1300.00 }
+  ],
+  "transactions": [
+    { "id": "1", "description": "Aplicação Inicial", "date": "2024-01-01", "value": 1000.00 },
+    { "id": "2", "description": "Rendimento Mensal", "date": "2024-02-01", "value": 25.00 },
+    { "id": "3", "description": "Rendimento Mensal", "date": "2024-03-01", "value": 75.00 },
+    { "id": "4", "description": "Rendimento Mensal", "date": "2024-04-01", "value": 100.00 }
+  ]
+} 

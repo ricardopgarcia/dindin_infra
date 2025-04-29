@@ -18,7 +18,7 @@ def handler(event, context):
     
     # Decodifica o ID da URL
     investment_id = urllib.parse.unquote(investment_id)
-    key = f'investments/{investment_id}.json'
+    key = f'investment_details/{investment_id}.json'
     
     try:
         response = s3.get_object(Bucket=bucket, Key=key)

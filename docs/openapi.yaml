@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: DinDin API
   version: 1.0.0
-  description: API para processamento e consulta de extratos bancários OFX.
+  description: API para processamento e consulta de extratos bancários OFX e investimentos.
 servers:
   - url: https://50917j6yoa.execute-api.sa-east-1.amazonaws.com/dev
 paths:
@@ -15,15 +15,26 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                  example:
-                    - name: Conta Corrente
-                    - name: Cartão Nubank
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        balance:
+                          type: number
+                        category:
+                          type: string
+                        type:
+                          type: string
+                          enum: [conta, investimento]
+                        icon:
+                          type: string
   /transactions:
     get:
       summary: Lista transações do extrato OFX
@@ -156,90 +167,24 @@ paths:
           content:
             application/json:
               schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CDBDetails'
+                  - $ref: '#/components/schemas/StockDetails'
+                  - $ref: '#/components/schemas/FIIDetails'
+                  - $ref: '#/components/schemas/CryptoDetails'
+                  - $ref: '#/components/schemas/PensionDetails'
+                  - $ref: '#/components/schemas/FGTSDetails'
+        '400':
+          description: ID do investimento não fornecido
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  id:
+                  error:
                     type: string
-                  name:
-                    type: string
-                  type:
-                    type: string
-                  category:
-                    type: string
-                  currentBalance:
-                    type: number
-                  initialInvestment:
-                    type: number
-                  totalProfitability:
-                    type: number
-                  annualProfitability:
-                    type: number
-                  liquidity:
-                    type: string
-                  maturityDate:
-                    type: string
-                    format: date
-                  chartData:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          type: string
-                          format: date
-                        value:
-                          type: number
-                  transactions:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        description:
-                          type: string
-                        date:
-                          type: string
-                          format: date
-                        value:
-                          type: number
-              example:
-                id: ITUB4-acoes
-                name: ITUB4
-                type: investimento
-                category: Ações
-                currentBalance: 1300.00
-                initialInvestment: 1000.00
-                totalProfitability: 30.0
-                annualProfitability: 12.5
-                liquidity: D+2
-                maturityDate: 2026-12-15
-                chartData:
-                  - date: 2024-01-01
-                    value: 1000.00
-                  - date: 2024-02-01
-                    value: 1025.00
-                  - date: 2024-03-01
-                    value: 1100.00
-                  - date: 2024-04-01
-                    value: 1300.00
-                transactions:
-                  - id: "1"
-                    description: Aplicação Inicial
-                    date: 2024-01-01
-                    value: 1000.00
-                  - id: "2"
-                    description: Rendimento Mensal
-                    date: 2024-02-01
-                    value: 25.00
-                  - id: "3"
-                    description: Rendimento Mensal
-                    date: 2024-03-01
-                    value: 75.00
-                  - id: "4"
-                    description: Rendimento Mensal
-                    date: 2024-04-01
-                    value: 100.00
+                example:
+                  error: 'investmentId é obrigatório'
         '404':
           description: Investimento não encontrado
           content:
@@ -249,5 +194,445 @@ paths:
                 properties:
                   error:
                     type: string
-              example:
-                error: Investimento não encontrado 
+                example:
+                  error: 'Investimento não encontrado'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+                example:
+                  error: 'Erro interno'
+                  details: 'Detalhes do erro'
+components:
+  schemas:
+    InvestmentBase:
+      type: object
+      required:
+        - account_name
+        - account_id
+        - profitability
+        - chart_data
+        - transactions
+      properties:
+        account_name:
+          type: string
+        account_id:
+          type: string
+        profitability:
+          type: object
+          properties:
+            total:
+              type: number
+              description: Rentabilidade total em percentual
+            annual:
+              type: number
+              description: Rentabilidade anual em percentual
+            period:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date
+                  description: Data início do cálculo
+                end_date:
+                  type: string
+                  format: date
+                  description: Data fim do cálculo
+        chart_data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Data do ponto
+              value:
+                type: number
+                description: Valor na data
+        transactions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              description:
+                type: string
+              date:
+                type: string
+                format: date
+              value:
+                type: number
+
+    CDBDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            purchase_date:
+              type: string
+              format: date
+            maturity_date:
+              type: string
+              format: date
+            rate:
+              type: string
+            initial_investment:
+              type: number
+            current_balance:
+              type: number
+            risk_level:
+              type: string
+            liquidity:
+              type: string
+              enum: [D+1, Vencimento]
+            institution:
+              type: string
+      example:
+        account_name: "CDB Daycoval Liquidez - Pri"
+        account_id: "5327e1d0-dda1-44f2-8ecc-a8b83b032dda"
+        purchase_date: "2023-09-14"
+        maturity_date: "2025-09-03"
+        rate: "115.83% do CDI"
+        initial_investment: 153182.25
+        current_balance: 170202.50
+        risk_level: "Baixo"
+        liquidity: "D+1"
+        institution: "Daycoval"
+        profitability:
+          total: 11.11
+          annual: 13.25
+          period:
+            start_date: "2023-09-14"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2023-09-14"
+            value: 153182.25
+          - date: "2023-12-31"
+            value: 160500.00
+          - date: "2024-04-28"
+            value: 170202.50
+        transactions:
+          - id: "cdb-001"
+            description: "Aplicação Inicial"
+            date: "2023-09-14"
+            value: 153182.25
+          - id: "cdb-002"
+            description: "Rendimento 4º Trimestre 2023"
+            date: "2023-12-31"
+            value: 7317.75
+          - id: "cdb-003"
+            description: "Rendimento 1º Trimestre 2024"
+            date: "2024-03-31"
+            value: 9702.50
+
+    StockDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            ticker:
+              type: string
+            sector:
+              type: string
+            quantity:
+              type: integer
+            average_price:
+              type: number
+            current_price:
+              type: number
+            total_balance:
+              type: number
+            purchase_date:
+              type: string
+              format: date
+            dividend_yield:
+              type: string
+      example:
+        account_name: "CMIG4"
+        account_id: "df6638c3-9124-49db-a8a5-02e5b0d4b60c"
+        ticker: "CMIG4"
+        sector: "Tecnologia"
+        quantity: 478
+        average_price: 28.41
+        current_price: 28.41
+        total_balance: 13581.50
+        purchase_date: "2020-07-14"
+        dividend_yield: "11.10%"
+        profitability:
+          total: 35.50
+          annual: 12.75
+          period:
+            start_date: "2020-07-14"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2020-07-14"
+            value: 10023.00
+          - date: "2022-07-14"
+            value: 11500.00
+          - date: "2024-04-28"
+            value: 13581.50
+        transactions:
+          - id: "stock-001"
+            description: "Compra Inicial"
+            date: "2020-07-14"
+            value: -10023.00
+          - id: "stock-002"
+            description: "Dividendos 2023"
+            date: "2023-12-31"
+            value: 1507.55
+          - id: "stock-003"
+            description: "JCP 2024"
+            date: "2024-03-31"
+            value: 550.95
+
+    FIIDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            ticker:
+              type: string
+            segment:
+              type: string
+            quantity:
+              type: integer
+            average_price:
+              type: number
+            current_price:
+              type: number
+            total_balance:
+              type: number
+            purchase_date:
+              type: string
+              format: date
+            dividend_yield:
+              type: string
+            vacancy_rate:
+              type: string
+      example:
+        account_name: "HFOF11"
+        account_id: "f8078acb-0903-46cf-8db9-224ee88be270"
+        ticker: "HFOF11"
+        segment: "Fundo de Fundos"
+        quantity: 99
+        average_price: 76.65
+        current_price: 76.65
+        total_balance: 7588.62
+        purchase_date: "2020-12-16"
+        dividend_yield: "8.78%"
+        vacancy_rate: "0.5%"
+        profitability:
+          total: 42.15
+          annual: 11.85
+          period:
+            start_date: "2020-12-16"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2020-12-16"
+            value: 5335.00
+          - date: "2022-12-16"
+            value: 6500.00
+          - date: "2024-04-28"
+            value: 7588.62
+        transactions:
+          - id: "fii-001"
+            description: "Compra Inicial"
+            date: "2020-12-16"
+            value: -5335.00
+          - id: "fii-002"
+            description: "Rendimentos 2023"
+            date: "2023-12-31"
+            value: 666.27
+          - id: "fii-003"
+            description: "Rendimentos 1º Trimestre 2024"
+            date: "2024-03-31"
+            value: 187.35
+
+    CryptoDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            token:
+              type: string
+            quantity:
+              type: number
+            average_price:
+              type: number
+            current_price:
+              type: number
+            total_balance:
+              type: number
+            purchase_date:
+              type: string
+              format: date
+            wallet:
+              type: string
+            network:
+              type: string
+      example:
+        account_name: "Bitcoin"
+        account_id: "b9e2a9ac-25be-4a54-9574-78a03c168063"
+        token: "Bitcoin"
+        quantity: 0.3266231
+        average_price: 3377.01
+        current_price: 3377.01
+        total_balance: 1103.01
+        purchase_date: "2021-06-13"
+        wallet: "Coinbase"
+        network: "ETH"
+        profitability:
+          total: 125.75
+          annual: 35.25
+          period:
+            start_date: "2021-06-13"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2021-06-13"
+            value: 488.75
+          - date: "2023-06-13"
+            value: 750.00
+          - date: "2024-04-28"
+            value: 1103.01
+        transactions:
+          - id: "crypto-001"
+            description: "Compra Inicial"
+            date: "2021-06-13"
+            value: -488.75
+          - id: "crypto-002"
+            description: "Compra Adicional"
+            date: "2023-06-13"
+            value: -261.25
+          - id: "crypto-003"
+            description: "Valorização"
+            date: "2024-04-28"
+            value: 353.01
+
+    PensionDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            plan_type:
+              type: string
+              enum: [PGBL, VGBL]
+            start_date:
+              type: string
+              format: date
+            total_balance:
+              type: number
+            monthly_contribution:
+              type: number
+            tax_regime:
+              type: string
+              enum: [Progressivo, Regressivo]
+            portfolio_composition:
+              type: object
+              properties:
+                Renda Fixa:
+                  type: string
+                Renda Variável:
+                  type: string
+            institution:
+              type: string
+      example:
+        account_name: "Previdência"
+        account_id: "a4c2835e-002c-4624-981c-6053d91c9146"
+        plan_type: "VGBL"
+        start_date: "2017-12-11"
+        total_balance: 99373.61
+        monthly_contribution: 1987.47
+        tax_regime: "Progressivo"
+        portfolio_composition:
+          Renda Fixa: "47.8%"
+          Renda Variável: "33.5%"
+        institution: "XP Vida e Previdência"
+        profitability:
+          total: 65.25
+          annual: 9.85
+          period:
+            start_date: "2017-12-11"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2017-12-11"
+            value: 60135.00
+          - date: "2021-12-11"
+            value: 80000.00
+          - date: "2024-04-28"
+            value: 99373.61
+        transactions:
+          - id: "pension-001"
+            description: "Aporte Inicial"
+            date: "2017-12-11"
+            value: 60135.00
+          - id: "pension-002"
+            description: "Aporte Mensal"
+            date: "2024-03-10"
+            value: 1987.47
+          - id: "pension-003"
+            description: "Aporte Mensal"
+            date: "2024-04-10"
+            value: 1987.47
+
+    FGTSDetails:
+      allOf:
+        - $ref: '#/components/schemas/InvestmentBase'
+        - type: object
+          properties:
+            total_balance:
+              type: number
+            birthday_withdrawal:
+              type: number
+            annual_yield:
+              type: string
+            next_withdrawal_date:
+              type: string
+              format: date
+            employer:
+              type: string
+            available_for_withdrawal:
+              type: number
+      example:
+        account_name: "FGTS - Ri"
+        account_id: "6a023e96-aeba-40b8-9bc0-a58f965841a0"
+        total_balance: 73813.07
+        birthday_withdrawal: 3690.65
+        annual_yield: "TR + 3% a.a."
+        next_withdrawal_date: "2025-12-02"
+        employer: "Atual Empregador"
+        available_for_withdrawal: 17831.17
+        profitability:
+          total: 3.00
+          annual: 3.00
+          period:
+            start_date: "2023-12-31"
+            end_date: "2024-04-28"
+        chart_data:
+          - date: "2023-12-31"
+            value: 71663.17
+          - date: "2024-02-28"
+            value: 72738.12
+          - date: "2024-04-28"
+            value: 73813.07
+        transactions:
+          - id: "fgts-001"
+            description: "Depósito FGTS"
+            date: "2024-02-07"
+            value: 1074.95
+          - id: "fgts-002"
+            description: "Depósito FGTS"
+            date: "2024-03-07"
+            value: 1074.95
+          - id: "fgts-003"
+            description: "Rendimento TR"
+            date: "2024-03-31"
+            value: 179.53 
