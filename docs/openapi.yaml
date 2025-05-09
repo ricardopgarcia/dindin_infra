@@ -20,21 +20,165 @@ paths:
                   accounts:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        name:
-                          type: string
-                        balance:
-                          type: number
-                        category:
-                          type: string
-                        type:
-                          type: string
-                          enum: [conta, investimento]
-                        icon:
-                          type: string
+                      $ref: '#/components/schemas/Account'
+    post:
+      summary: Cria uma nova conta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Conta criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'Campo obrigatório ausente: titular'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+                example:
+                  error: 'Erro ao criar conta'
+                  details: 'Detalhes do erro'
+  /accounts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID da conta
+    put:
+      summary: Atualiza uma conta existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                balance:
+                  type: number
+                category:
+                  type: string
+                type:
+                  type: string
+                icon:
+                  type: string
+                titular:
+                  type: string
+                  enum: [ricardo, priscila]
+      responses:
+        '200':
+          description: Conta atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'ID da conta não fornecido'
+        '404':
+          description: Conta não encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'Conta não encontrada'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+                example:
+                  error: 'Erro ao atualizar conta'
+                  details: 'Detalhes do erro'
+    delete:
+      summary: Remove uma conta
+      responses:
+        '200':
+          description: Conta removida com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'ID da conta não fornecido'
+        '404':
+          description: Conta não encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'Conta não encontrada'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+                example:
+                  error: 'Erro ao deletar conta'
+                  details: 'Detalhes do erro'
   /transactions:
     get:
       summary: Lista transações do extrato OFX
@@ -635,4 +779,39 @@ components:
           - id: "fgts-003"
             description: "Rendimento TR"
             date: "2024-03-31"
-            value: 179.53 
+            value: 179.53
+
+    Account:
+      type: object
+      required:
+        - id
+        - name
+        - balance
+        - category
+        - type
+        - icon
+        - titular
+      properties:
+        id:
+          type: string
+          description: Identificador único da conta
+        name:
+          type: string
+          description: Nome da conta
+        balance:
+          type: number
+          format: float
+          description: Saldo atual da conta
+        category:
+          type: string
+          description: Categoria da conta (ex: Contas, Investimentos, etc)
+        type:
+          type: string
+          description: Tipo da conta (conta, investimento, cartao)
+        icon:
+          type: string
+          description: Ícone da conta
+        titular:
+          type: string
+          description: Titular da conta (ricardo ou priscila)
+          enum: [ricardo, priscila] 

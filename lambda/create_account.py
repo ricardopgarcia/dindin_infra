@@ -13,7 +13,7 @@ def handler(event, context):
         body = json.loads(event.get('body', '{}'))
         
         # Valida os campos obrigatórios
-        required_fields = ['name', 'balance', 'category', 'type']
+        required_fields = ['name', 'balance', 'category', 'type', 'icon', 'titular']
         for field in required_fields:
             if field not in body:
                 return {
@@ -22,6 +22,15 @@ def handler(event, context):
                         'error': f'Campo obrigatório ausente: {field}'
                     })
                 }
+        
+        # Validação do campo titular
+        if body['titular'] not in ['ricardo', 'priscila']:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({
+                    'error': 'Campo titular deve ser "ricardo" ou "priscila"'
+                })
+            }
         
         # Lê o arquivo atual de contas
         response = s3.get_object(Bucket=bucket, Key=key)
@@ -36,7 +45,8 @@ def handler(event, context):
             'balance': float(body['balance']),
             'category': body['category'],
             'type': body['type'],
-            'icon': body.get('icon', 'banknote')  # Ícone padrão se não fornecido
+            'icon': body['icon'],
+            'titular': body['titular']
         }
         
         # Adiciona a nova conta à lista
